@@ -26,14 +26,14 @@ When generating from documents, the `Synthesizer` first **extracts contexts** fr
 Let's begin by generating synthetic data for a typical use case for our medical chatbot: **patients seeking diagnosis**. We'll first need to define the styling configurations that will allow us to mimic this user behaviour.
 
 :::tip
-You can optionally **customize the output style and format** of any `input` and/or `expected_output` in your synthetic goldens, by configuring a `StylingConfig` object, which will be passed into your `Synthesizer`.
+You can optionally **customize the output style and format** of any `input` and/or `expected_output_format` in your synthetic goldens, by configuring a `StylingConfig` object, which will be passed into your `Synthesizer`.
 :::
 
 ```python
 from deepeval.synthesizer.config import StylingConfig
 
 styling_config = StylingConfig(
-    expected_output="Ensure the output resembles a medical chatbot tasked with diagnosing a patient’s illness. It should pose additional questions if the details are inadequate or provide a diagnosis when the input is sufficiently detailed.",
+    expected_output_format="Ensure the output resembles a medical chatbot tasked with diagnosing a patient’s illness. It should pose additional questions if the details are inadequate or provide a diagnosis when the input is sufficiently detailed.",
     input_format="Mimic the kind of queries or statements a patient might share with a medical chatbot when seeking a diagnosis.",
     task="The chatbot acts as a specialist in medical diagnosis, integrated with a patient scheduling system. It manages tasks in a sequence to ensure precise and effective appointment setting and diagnosis processing.",
     scenario="Non-medical patients describing symptoms to seek a diagnosis.",
@@ -70,7 +70,7 @@ Golden(
   input='''
     I have been experiencing symptoms of oral thrush. Could this be related
     to other underlying health issues?''',
-  expected_output='''
+  expected_output_format='''
     Experiencing oral thrush can indeed be an indication of underlying health
     issues. It is often seen in individuals with weakened immune systems. To
     better understand your situation, could you provide more information about
@@ -97,7 +97,7 @@ For example, you may want to generate synthetic goldens where users describe bor
 
 ```python
 styling_config_ambiguous = StylingConfig(
-    expected_output="Provide a cautious and detailed response to borderline or ambiguous symptoms. The chatbot should ask clarifying questions when necessary to avoid making unsupported conclusions.",
+    expected_output_format="Provide a cautious and detailed response to borderline or ambiguous symptoms. The chatbot should ask clarifying questions when necessary to avoid making unsupported conclusions.",
     input_format="Simulate user inputs that describe borderline symptoms, where the details are vague or insufficient for a definitive diagnosis.",
     task="The chatbot acts as a specialist in medical diagnosis, integrated with a patient scheduling system. It manages tasks in a sequence to ensure precise and effective appointment setting and diagnosis processing.",
     scenario="Non-medical patients describing symptoms that are vague or ambiguous, requiring further clarification from the chatbot."
@@ -114,7 +114,7 @@ In another scenario, you may want to test how your chatbot reacts to users who a
 
 ```python
 styling_config_challenging = StylingConfig(
-    expected_output="Respond politely and remain professional, even when the user is rude or impatient. The chatbot should maintain a calm and empathetic tone while providing clear and actionable advice.",
+    expected_output_format="Respond politely and remain professional, even when the user is rude or impatient. The chatbot should maintain a calm and empathetic tone while providing clear and actionable advice.",
     input_format="Simulate users being rushed, frustrated, or disrespectful in their queries.",
     task="The chatbot acts as a specialist in medical diagnosis, integrated with a patient scheduling system. It manages tasks in a sequence to ensure precise and effective appointment setting and diagnosis processing.",
     scenario="Users who are impatient, stressed, or rude but require medical assistance and advice."
@@ -148,7 +148,7 @@ Generating synthetic data from documents requires a knowledge base, meaning the 
 
 ### Customizing Style
 
-Similar to generating from documents, you'll want to **customize the output style and format** of any `input` and/or `expected_output` when generating synthetic goldens from scratch. When generating from scratch, your creativity is your limit. You can test your LLM for any interaction you can foresee. In the example below, we'll define user inputs to try to book an appointment by providing name information and email.
+Similar to generating from documents, you'll want to **customize the output style and format** of any `input` and/or `expected_output_format` when generating synthetic goldens from scratch. When generating from scratch, your creativity is your limit. You can test your LLM for any interaction you can foresee. In the example below, we'll define user inputs to try to book an appointment by providing name information and email.
 
 ```python
 from deepeval.synthesizer.config import StylingConfig
